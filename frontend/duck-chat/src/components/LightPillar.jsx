@@ -55,7 +55,7 @@ const LightPillar = ({
       renderer = new THREE.WebGLRenderer({
         antialias: false,
         alpha: true,
-        powerPreference: 'high-performance',
+        powerPreference: 'low-power',
         precision: 'lowp',
         stencil: false,
         depth: false
@@ -67,7 +67,7 @@ const LightPillar = ({
     }
 
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(1);
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
@@ -168,7 +168,7 @@ const LightPillar = ({
 
         vec3 color = vec3(0.0);
         
-        for(float i = 0.0; i < 100.0; i++) {
+        for(float i = 0.0; i < 32.0; i++) {
           vec3 pos = origin + direction * depth;
           pos.xz *= rotX;
 
@@ -256,7 +256,7 @@ const LightPillar = ({
 
     // Animation loop with fixed timestep
     let lastTime = performance.now();
-    const targetFPS = 60;
+    const targetFPS = 30;
     const frameTime = 1000 / targetFPS;
 
     const animate = currentTime => {

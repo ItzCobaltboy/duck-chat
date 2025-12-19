@@ -1,0 +1,99 @@
+/* =========================
+   BASE CARD
+========================= */
+.neon-card {
+  /* default = pink */
+  --neon-main: #c67bff;
+  --neon-soft: rgba(198, 123, 255, 0.22);
+
+  width: 30rem;
+  height: 20rem;
+  position: relative;
+  padding: 3rem;
+  border-radius: 16px;
+  background: rgba(20, 20, 30, 0.85);
+  font-family: "Nova Square", sans-serif;
+  border: 3px solid var(--neon-soft);
+  color: white;
+  font-size: large;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+
+  overflow: hidden;
+}
+
+/* =========================
+   COLOR VARIANTS
+========================= */
+
+/* 🔵 BLUE */
+.neon-card-blue {
+  --neon-main: #1cceff;
+  --neon-soft: rgba(28, 206, 255, 0.25);
+}
+
+/* 🤍 WHITE */
+.neon-card-white {
+  --neon-main: #ffffff;
+  --neon-soft: rgba(255, 255, 255, 0.2);
+}
+
+/* 💜 PINK */
+.neon-card-pink {
+  --neon-main: #c67bff;
+  --neon-soft: rgba(198, 123, 255, 0.3);
+}
+
+/* =========================
+   CURSOR GLOW
+========================= */
+.neon-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    600px circle at var(--x) var(--y),
+    var(--neon-soft),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.neon-card:hover::before {
+  opacity: 1;
+}
+
+/* =========================
+   HOVER EFFECT
+========================= */
+.neon-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--neon-main);
+  box-shadow:
+    0 0 20px color-mix(in srgb, var(--neon-main) 30%, transparent),
+    0 0 40px color-mix(in srgb, var(--neon-main) 15%, transparent);
+}
+
+/* =========================
+   HEADER (AUTO MATCHES)
+========================= */
+.card-header {
+  font-family: "Nova Square", sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  padding-bottom: 1.5rem;
+
+  color: var(--neon-main);
+  text-shadow:
+    0 0 6px color-mix(in srgb, var(--neon-main) 60%, transparent);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -79,11 +79,7 @@
     margin-top: 30px;
     justify-content: center;
     z-index: 1;
-    height: 50vh;
+    flex-wrap: wrap;
+    padding-bottom: 40px;
 }
 
-.root{
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}

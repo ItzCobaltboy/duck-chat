@@ -1,6 +1,8 @@
 .chat-screen {
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh; /* dynamic viewport */
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   background: rgba(0, 0, 0, 0);
@@ -9,15 +11,21 @@
 }
 
 .chat-header {
+  width: 100%;
   padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #222;
 }
 
+.animated-gradient-text {
+  max-width: fit-content;
+}
+
 .status {
   font-size: 0.85rem;
   opacity: 0.7;
+  width: fit-content;
 }
 
 .status.connected {
@@ -57,7 +65,11 @@
   padding: 0.6rem 0.9rem;
   border-radius: 12px;
   font-size: 0.95rem;
+  white-space: pre-wrap;      /* respects newlines + wraps */
+  word-break: break-word;     /* breaks long words */
+  overflow-wrap: anywhere;    /* nuclear option for long strings */
 }
+  
 
 .message.me {
   align-self: flex-end;
@@ -77,6 +89,8 @@
 }
 
 .input-area input {
+  min-height: 5%;
+  width: 100%;
   flex: 1;
   padding: 0.6rem;
   border-radius: 8px;
@@ -84,9 +98,32 @@
   outline: none;
 }
 
-.input-area button {
+.input-area button { 
   padding: 0.6rem 1rem;
   border-radius: 8px;
   border: none;
   cursor: pointer;
+}
+
+
+.disconnect-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #ccc;
+  height: 100%;
+  width: 100%;
+}
+
+.disconnect-area p {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.disconnect-btn {
+  margin-left: 8px;
+  background: rgba(255,255,255,0.1);
 }

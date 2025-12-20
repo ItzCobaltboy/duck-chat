@@ -1,26 +1,70 @@
 import { useState } from 'react';
+import { createChat, pushMessage, closeChat } from './chatHandler';
 import './chatScreen.css';
+import GradientText from '../components/GradientText';
 
 function ChatScreen() {
-  const [status, setStatus] = useState('idle'); // idle | connecting | connected
+  const [status, setStatus] = useState('idle'); 
   const [messages, setMessages] = useState([
-    { from: 'stranger', text: 'Hey 👋' },
-    { from: 'me', text: 'Yo!' }
+    { from: 'Duck', text: 'Say Hey to stranger! 👋' },
   ]);
   const [input, setInput] = useState('');
 
-  // Placeholder for WebRTC / backend matchmaking
+  /* ================= CALLBACKS ================= */
+
+  function onConnectedCb() {
+    setStatus('connected');
+  }
+
+  function onDisconnectedCb() {
+    setStatus('disconnected');
+    setMessages([
+      { from: 'Duck', text: 'The other person disconnected.' }
+    ]);
+  }
+
+  function onMessageCb(text) {
+    setMessages(prev => [
+      ...prev,
+      { from: 'stranger', text }
+    ]);
+  }
+
+  /* ================= ACTIONS ================= */
+
   function handleConnect() {
     setStatus('connecting');
 
-    // fake API / signaling delay
-    setTimeout(() => {
-      setStatus('connected');
-    }, 1500);
+    createChat({
+      onMessage: onMessageCb,
+      onConnected: onConnectedCb,
+      onDisconnected: onDisconnectedCb,
+    });
+  }
+
+  function handleDisconnect() {
+    closeChat();
+    setStatus('idle');
+    setMessages([
+      { from: 'Duck', text: 'Say Hey to stranger! 👋' },
+    ]);
+  }
+
+  function handleTryAgain() {
+    closeChat();
+    setMessages([
+      { from: 'Duck', text: 'Finding a new stranger…' },
+    ]);
+    handleConnect();
   }
 
   function sendMessage() {
     if (!input.trim()) return;
+
+    if (!pushMessage(input)) {
+      console.error('Failed to send message');
+      return;
+    }
 
     setMessages(prev => [
       ...prev,
@@ -28,37 +72,53 @@ function ChatScreen() {
     ]);
 
     setInput('');
-
-    // fake stranger reply
-    setTimeout(() => {
-      setMessages(prev => [
-        ...prev,
-        { from: 'stranger', text: 'Interesting 🤔' }
-      ]);
-    }, 1000);
   }
+
+  /* ================= UI ================= */
 
   return (
     <div className="chat-screen">
       <header className="chat-header">
-        <h2>Duck Chat</h2>
+        <GradientText
+          colors={[
+            "#1CCEFF", "#FFFFFF", "#C67BFF",
+            "#1CCEFF", "#FFFFFF", "#C67BFF"
+          ]}
+          animationSpeed={8}
+        >
+          Duck Chat
+        </GradientText>
         <span className={`status ${status}`}>{status}</span>
       </header>
 
-      {status !== 'connected' ? (
+      {/* IDLE */}
+      {status === 'idle' && (
         <div className="connect-area">
-          <button onClick={handleConnect} disabled={status === 'connecting'}>
-            {status === 'connecting' ? 'Connecting...' : 'Connect'}
-          </button>
+          <button onClick={handleConnect}>Connect</button>
         </div>
-      ) : (
+      )}
+
+      {/* CONNECTING */}
+      {status === 'connecting' && (
+        <div className="connect-area">
+          <button disabled>Connecting...</button>
+        </div>
+      )}
+
+      {/* DISCONNECTED */}
+      {status === 'disconnected' && (
+        <div className="disconnect-area">
+          <p>You have been disconnected.</p>
+          <button onClick={handleTryAgain}>Try Again</button>
+        </div>
+      )}
+
+      {/* CONNECTED */}
+      {status === 'connected' && (
         <>
           <div className="messages">
             {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`message ${msg.from}`}
-              >
+              <div key={idx} className={`message ${msg.from}`}>
                 {msg.text}
               </div>
             ))}
@@ -72,6 +132,9 @@ function ChatScreen() {
               onKeyDown={e => e.key === 'Enter' && sendMessage()}
             />
             <button onClick={sendMessage}>Send</button>
+            <button className="disconnect-btn" onClick={handleDisconnect}>
+              Disconnect
+            </button>
           </div>
         </>
       )}

@@ -85,17 +85,7 @@ export function IntroScreen({ setShowIntro }) {
         </div>
 
         <div className='card-array'>
-            <AnimatedContent
-            distance={150}
-            direction="vertical"
-            reverse={false}
-            duration={1.2}
-            ease="power3.out"
-            initialOpacity={0.2}
-            animateOpacity
-            scale={1.1}
-            threshold={0.2}
-            delay={0.3}>
+
                 <NeonCard isPink={true}>
                     <div className="card-header">Zero Profiles. Zero Attachments.</div>
                     <p>
@@ -103,20 +93,8 @@ export function IntroScreen({ setShowIntro }) {
                     and disappear like a digital ghost. As it should be.
                     </p>
                 </NeonCard>
-            </AnimatedContent>
-            <AnimatedContent
-            distance={150}
-            direction="vertical"
-            reverse={false}
-            duration={1.2}
-            ease="power3.out"
-            initialOpacity={0.2}
-            animateOpacity
-            scale={1.1}
-            threshold={0.2}
-            delay={0.3}
-            >
-               
+
+
                 <NeonCard isBlue={true}>
                 <div className="card-header">Talk To Absolute Strangers</div>
                 <p>
@@ -124,20 +102,6 @@ export function IntroScreen({ setShowIntro }) {
                     You will never know. That's the thrill. That's the chaos.
                 </p>
                 </NeonCard>
-
-            </AnimatedContent>
-            <AnimatedContent
-                distance={150}
-                direction="vertical"
-                reverse={false}
-                duration={1.2}
-                ease="power3.out"
-                initialOpacity={0.2}
-                animateOpacity
-                scale={1.1}
-                threshold={0.2}
-                delay={0.3}
-                >
                 <NeonCard isWhite={true}>
                     <div className="card-header">Skip Without Guilt</div>
                     <p>
@@ -145,7 +109,7 @@ export function IntroScreen({ setShowIntro }) {
                     No awkward goodbyes. No explanations. Just pure social violence.
                     </p>
                 </NeonCard>
-            </AnimatedContent>
+
         </div>
         </>
     );

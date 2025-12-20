@@ -1,5 +1,8 @@
 
-const SIGNAL_SERVER = "ws://localhost:8080";
+const backendUrl = import.meta.env.VITE_BACKEND_URL || "ws://localhost:8080";
+
+// use wss:// in production with proper SSL certs
+const SIGNAL_SERVER = "wss://" + backendUrl.replace(/^https?:\/\//, '');
 
 let socket;
 let peer;

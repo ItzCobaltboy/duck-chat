@@ -1,11 +1,11 @@
 // index.js
-const express = require('express');
-const { WebSocketServer } = require('ws');
+import express from 'express';
+import { WebSocketServer } from 'ws';
 
 const app = express();
-const PORT = process.env.PORT || 8080;  // <- IMPORTANT
+const PORT = process.env.PORT || 8080;
 
-// if you have HTTP endpoints
+// Optional HTTP endpoint
 app.get('/', (req, res) => res.send('Duck Chat Backend'));
 
 // start HTTP server
@@ -24,8 +24,6 @@ const rateLimits = new Map(); // socket -> timestamps[]
 
 const RATE_LIMIT_WINDOW = 10_000; // 10 sec
 const RATE_LIMIT_MAX = 30;        // messages per window
-
-console.log("WebSocket signaling server running on ws://localhost:8080");
 
 function isRateLimited(ws) {
   const now = Date.now();

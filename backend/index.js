@@ -1,7 +1,22 @@
 // index.js
-import { WebSocketServer } from "ws";
+const express = require('express');
+const { WebSocketServer } = require('ws');
 
-const wss = new WebSocketServer({ port: 8080 });
+const app = express();
+const PORT = process.env.PORT || 8080;  // <- IMPORTANT
+
+// if you have HTTP endpoints
+app.get('/', (req, res) => res.send('Duck Chat Backend'));
+
+// start HTTP server
+const server = app.listen(PORT, () => {
+  console.log(`HTTP server listening on port ${PORT}`);
+});
+
+// WebSocket server attached to the same server
+const wss = new WebSocketServer({ server });
+
+console.log(`WebSocket signaling server running on ws://0.0.0.0:${PORT}`);
 
 const waitingQueue = [];
 const pairs = new Map(); // socket -> partnerSocket

@@ -41,7 +41,7 @@ The frontend reads the signaling server base URL from Vite env variables.
 2. Set the backend URL (HTTP/HTTPS; the app upgrades it to `wss://`):
 
 ```
-VITE_BACKEND_URL=http://localhost:8081
+VITE_BACKEND_URL=http://localhost:8080
 ```
 
 > For local development without SSL, you may need to run a local reverse proxy or adjust the signaling URL logic to use `ws://`. If you change the backend port, update this value to match.
@@ -55,7 +55,7 @@ cd backend
 node index.js
 ```
 
-The server listens on port `8080` by default and exposes the WebSocket signaling server on the same port. If you keep the sample `.env.development` value (`8081`), start the backend with `PORT=8081` instead.
+The server listens on port `8080` by default and exposes the WebSocket signaling server on the same port.
 
 ### 2) Start the frontend
 
